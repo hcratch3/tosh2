@@ -16,7 +16,6 @@ jobs:
         echo ';window.P = P' >> phosphorus/phosphorus.js
         yarn
         yarn grammar && yarn test
-        yarn start
 
     - name: Commit and push changes
       run: |
