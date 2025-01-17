@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  my_job:
+    name: deploy to staging
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Run Deploy
+      run: |
+        echo ';window.P = P' >> phosphorus/phosphorus.js
+        yarn
+        yarn grammar && yarn test
+        yarn start
+
+    - name: Commit and push changes
+      run: |
+        sudo git config user.name "auto-push"
+        sudo git config user.email "auto-push@example.com"
+        sudo git add .
+        sudo git commit -m "auto push from ci" || echo "No changes to commit"
+        sudo git push
